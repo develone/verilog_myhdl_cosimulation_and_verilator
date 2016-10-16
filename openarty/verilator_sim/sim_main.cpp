@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "Vj1.h"
+#include "Vtxuart.h"
 #include "verilated_vcd_c.h"
 
 int main(int argc, char **argv)
@@ -35,9 +35,9 @@ int main(int argc, char **argv)
     top->i_reset = 1;
     top->i_wr = 1;
     top->i_data = 0x55;
-    top->i_setup = 0x6c8
-    
- 
+    top->i_setup = 0x6c8;
+    }
+/* 
 
     for (i = 0; i < 100000000; i++) {
       uint16_t a = top->mem_addr;
@@ -71,4 +71,5 @@ int main(int argc, char **argv)
     fclose(log);
 
     exit(0);
-}
+
+}*/
