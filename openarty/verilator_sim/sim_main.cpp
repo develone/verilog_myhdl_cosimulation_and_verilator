@@ -1,13 +1,15 @@
 #include <stdio.h>
 #include "Vtxuart.h"
 #include "verilated_vcd_c.h"
-
+struct rec {
+	char raw_buf[1];
+};
 int main(int argc, char **argv)
 {
     Verilated::commandArgs(argc, argv);
     Vtxuart* top = new Vtxuart;
-    int i;
-
+    int i,ii0;
+    struct rec my_record;
     Verilated::traceEverOn(true);
     VerilatedVcdC* tfp = new VerilatedVcdC;
     top->trace (tfp, 99);
@@ -20,12 +22,12 @@ int main(int argc, char **argv)
 
  
     FILE *hex = fopen(argv[1], "r");
-    for (i = 0; i < 4096; i++) {
-      unsigned int v;
-      if (fscanf(hex, "%x\n", &v) != 1) {
-        fprintf(stderr, "invalid hex value at line %d\n", i + 1);
-        exit(1);
-      }
+    char v[10],c;
+    for (i = 0; i < 10; i++) {
+      fread(&my_record,sizeof(struct rec),1,hex);
+      ii0 = (int)my_record.raw_buf[0];
+      v[i] = ii0;
+      //printf("%d\n",v[i]);
       
     }
 
@@ -36,7 +38,11 @@ int main(int argc, char **argv)
     top->i_wr = 1;
     top->i_data = 0x55;
     top->i_setup = 0x6c8;
+    for (i = 0; i < 10; i++) {
+	    top->i_data = v[i];
+	    printf("%d\n",v[i]);
     }
+}
 /* 
 
     for (i = 0; i < 100000000; i++) {
