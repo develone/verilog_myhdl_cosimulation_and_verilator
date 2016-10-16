@@ -5,24 +5,20 @@
 int main(int argc, char **argv)
 {
     Verilated::commandArgs(argc, argv);
-    Vj1* top = new Vj1;
+    Vtxuart* top = new Vtxuart;
     int i;
 
-    // Verilated::traceEverOn(true);
-    // VerilatedVcdC* tfp = new VerilatedVcdC;
-    // top->trace (tfp, 99);
-    // tfp->open ("simx.vcd");
+    Verilated::traceEverOn(true);
+    VerilatedVcdC* tfp = new VerilatedVcdC;
+    top->trace (tfp, 99);
+    tfp->open ("simx.vcd");
 
     if (argc != 2) {
       fprintf(stderr, "usage: sim <hex-file>\n");
       exit(1);
     }
 
-    union {
-      uint32_t ram32[4096];
-      uint16_t ram16[8192];
-    };
-
+ 
     FILE *hex = fopen(argv[1], "r");
     for (i = 0; i < 4096; i++) {
       unsigned int v;
@@ -30,16 +26,18 @@ int main(int argc, char **argv)
         fprintf(stderr, "invalid hex value at line %d\n", i + 1);
         exit(1);
       }
-      ram32[i] = v;
+      
     }
 
     FILE *log = fopen("log", "w");
     int t = 0;
 
-    top->resetq = 0;
-    top->eval();
-    top->resetq = 1;
-    top->eval();
+    top->i_reset = 1;
+    top->i_wr = 1;
+    top->i_data = 0x55;
+    top->i_setup = 0x6c8
+    
+ 
 
     for (i = 0; i < 100000000; i++) {
       uint16_t a = top->mem_addr;
