@@ -12,3 +12,5 @@ obj_dir/Vtxuart: $(VERILOGS) sim_main.cpp Makefile
 	$(MAKE) -C obj_dir OPT_FAST="-O2" -f Vtxuart.mk Vtxuart
 
 .PHONY: all
+clean:
+	rm -rf obj_dir
