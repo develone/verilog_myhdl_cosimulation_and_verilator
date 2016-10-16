@@ -2,13 +2,13 @@
 $(SUBDIRS):
 	$(MAKE) -C $@
 
-all: obj_dir/Vj1 $(SUBDIRS)
+all: obj_dir/Vtxuart $(SUBDIRS)
 
-VERILOGS=verilog/j1.v verilog/stack.v
+VERILOGS=verilog/txuart.v verilog/rxuart.v
 
-obj_dir/Vj1: $(VERILOGS) sim_main.cpp Makefile
-	verilator -Wall --cc --trace -Iverilog/ $(VERILOGS) --top-module j1 --exe sim_main.cpp
-	# verilator --cc --trace $(VERILOGS) --top-module j1 --exe sim_main.cpp
-	$(MAKE) -C obj_dir OPT_FAST="-O2" -f Vj1.mk Vj1
+obj_dir/Vtxuart: $(VERILOGS) sim_main.cpp Makefile
+	verilator -Wall --cc --trace -Iverilog/ $(VERILOGS) --top-module txuart --exe sim_main.cpp
+	# verilator --cc --trace $(VERILOGS) --top-module txuart --exe sim_main.cpp
+	$(MAKE) -C obj_dir OPT_FAST="-O2" -f Vtxuart.mk Vtxuart
 
 .PHONY: all
