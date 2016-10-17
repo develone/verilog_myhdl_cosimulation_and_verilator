@@ -35,11 +35,17 @@ int main(int argc, char **argv)
     int t = 0;
 
     top->i_reset = 1;
+    top->i_reset = 0;
     top->i_wr = 1;
     top->i_data = 0x55;
+    top->i_wr = 0;
+    top->i_wr = 1;
     top->i_setup = 0x6c8;
+    top->i_wr = 0;
     for (i = 0; i < 10; i++) {
+	    top->i_wr = 1;
 	    top->i_data = v[i];
+	    top->i_wr = 0;
 	    printf("%d\n",v[i]);
     }
 }
