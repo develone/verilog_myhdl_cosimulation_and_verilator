@@ -8,7 +8,7 @@ int main(int argc, char **argv)
 {
     Verilated::commandArgs(argc, argv);
     Vtxuart* top = new Vtxuart;
-    int i,ii0;
+    int i,ii0,retno;
     struct rec my_record;
     Verilated::traceEverOn(true);
     VerilatedVcdC* tfp = new VerilatedVcdC;
@@ -24,10 +24,10 @@ int main(int argc, char **argv)
     FILE *hex = fopen(argv[1], "r");
     char v[10],c;
     for (i = 0; i < 10; i++) {
-      fread(&my_record,sizeof(struct rec),1,hex);
+      retno = fread(&my_record,sizeof(struct rec),1,hex);
       ii0 = (int)my_record.raw_buf[0];
       v[i] = ii0;
-      //printf("%d\n",v[i]);
+      printf("%d\n",retno);
       
     }
 
